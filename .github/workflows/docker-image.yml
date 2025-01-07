@@ -1,18 +1,22 @@
-name: Docker Image CI
+name: Run Weatherproject Docker Action
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
 
 jobs:
-
-  build:
-
+  build-and-run:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Build and run the custom Weatherproject Docker action
+      - name: Run Weatherproject Docker Action
+        uses: ./.github/actions
+        with:
+          port: 8000
